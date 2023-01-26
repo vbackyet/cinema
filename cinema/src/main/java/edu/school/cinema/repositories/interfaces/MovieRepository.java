@@ -1,8 +1,12 @@
 package edu.school.cinema.repositories.interfaces;
 
-public interface MovieRepository {
-    List<Movie> findAll();
+import edu.school.cinema.models.Film;
 
-    @Transactional
-    void save(Message entity);
+import java.util.List;
+
+public interface MovieRepository {
+    List<Film> findAll();
+//    void save(Film entity);
 }
+
+

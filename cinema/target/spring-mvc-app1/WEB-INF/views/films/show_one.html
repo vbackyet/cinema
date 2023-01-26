@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Show film</title>
+</head>
+<body>
+<p th:text="${film.getTitle()}">VALUE</p>
+<p th:text="${film.getYear_of_release()}">VALUE</p>
+<p th:text="${film.getAge_restrictions()}">VALUE</p>
+<p th:text="${film.getDescription()}">VALUE</p>
+
+<!--<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>-->
+
+<form th:method="DELETE" th:action="@{/admin/panel/films/{id}/delete(id=${film.getId()})}">
+  <input type="submit" value="Delete"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All halls</title>
+</head>
+<body>
+
+<div th:each="session : ${sessions}">
+    <a th:text="${session.getFilm().getTitle() + ', seats: ' + session.getCost()}">user</a>
+
+</div>
+<a href="/admin/panel/halls/new">Create new hall!</a>
+</body>
+</html>

@@ -5,13 +5,14 @@ import lombok.*;
 import org.hibernate.annotations.ValueGenerationType;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Film")
+@Table(name = "Films")
 public class Film {
 
     @Id
@@ -28,7 +29,7 @@ public class Film {
 
 
     @Column
-    private int age_restriction;
+    private String age_restrictions;
 
     @Column
     private String description;
@@ -37,7 +38,17 @@ public class Film {
     private String poster_for_a_movie;
 
 
-
-
-
+    @OneToMany(mappedBy = "film")
+    private List<Session> sessions;
+    @Override
+    public String toString() {
+        return "Film{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", year_of_release=" + year_of_release +
+                ", age_restrictions='" + age_restrictions + '\'' +
+                ", description='" + description + '\'' +
+                ", poster_for_a_movie='" + poster_for_a_movie + '\'' +
+                '}';
+    }
 }
