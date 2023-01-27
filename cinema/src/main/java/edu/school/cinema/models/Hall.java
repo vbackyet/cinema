@@ -26,6 +26,16 @@ public class Hall {
 
     @OneToMany(mappedBy = "hall")
     private List<Session> sessions;
+
+    @Override
+    public String toString() {
+        return "Hall{" +
+                "id=" + id +
+                ", serial_number=" + serial_number +
+                ", number_of_seats=" + number_of_seats +
+                ", sessions=" + sessions +
+                '}';
+    }
 }
 //    The page for working with movie halls contains a list of all movie halls created
 //        by an administrator. The administrator can create a movie hall with a certain

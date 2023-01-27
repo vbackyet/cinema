@@ -1,6 +1,7 @@
 package edu.school.cinema.services;
 
 
+import edu.school.cinema.models.Hall;
 import edu.school.cinema.models.Session;
 import edu.school.cinema.repositories.SessionsRepositoryEntityManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;

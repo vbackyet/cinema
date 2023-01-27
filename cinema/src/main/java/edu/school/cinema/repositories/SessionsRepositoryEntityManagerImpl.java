@@ -1,6 +1,7 @@
 package edu.school.cinema.repositories;
 
 
+import edu.school.cinema.models.Hall;
 import edu.school.cinema.models.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,7 @@ public class SessionsRepositoryEntityManagerImpl {
 
    @Autowired
     public List<Session> findAll() {
-        return entityManager.createQuery("from Sessions").getResultList();
+        return entityManager.createQuery("from Session", Session.class).getResultList();
     }
+
 }

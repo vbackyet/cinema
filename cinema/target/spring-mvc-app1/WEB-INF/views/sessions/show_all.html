@@ -7,9 +7,14 @@
 <body>
 
 <div th:each="session : ${sessions}">
-    <a th:text="${session.getFilm().getTitle() + ', seats: ' + session.getCost()}">user</a>
+    <a th:text="${session.getFilm().getTitle() + ', time: ' + session.getStartAt() +
+    ', hall_number: ' + session.getHall().getSerial_number()}">user</a>
 
 </div>
-<a href="/admin/panel/halls/new">Create new hall!</a>
+<a href="/admin/panel/sessions/new">Create new session!</a>
 </body>
 </html>
+
+
+
+

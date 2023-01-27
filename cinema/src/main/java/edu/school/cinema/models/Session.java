@@ -14,10 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Session")
+@Table(name = "sessions")
 public class Session {
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +36,19 @@ public class Session {
     @Column
     private int cost;
 
-//    A page for working with movie shows. An administrator can create a session
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", film=" + film +
+                ", startAt=" + startAt +
+                ", hall=" + hall +
+                ", cost=" + cost +
+                '}';
+    }
+
+
+    //    A page for working with movie shows. An administrator can create a session
 //for a certain movie in a certain movie hall at a required time. An administrator
 //    should be able to indicate a ticket cost. You should implement loading of all
 //    movie and movie hall data as attributes onto the page for subsequent selection
