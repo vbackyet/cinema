@@ -6,27 +6,26 @@
 </head>
 <body>
 
-<form th:method="PATCH"   th:action="@{/admin/panel/sessions/new}" >
+<form th:method="POST"   th:action="@{/admin/panel/sessions/new}" >
 
-    <label for="cost">Enter cost: </label>
-    <input type="text" th:field="${session.startAt}" id="cost"/>
+    <label for="cost">Enter time: </label>
+    <input type="datetime-local"  th:field="${session.startAt}" id="cost"/>
 
-    <label for="title">Enter title : </label>
-    <input type="text" th:field="${session.cost}" id="title"/>
-    <!--  <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{title}">Name Error</div>-->
+    <label for="title">Enter cost: </label>
+    <input type="text"   th:field="${session.cost}" id="title"/>
 
-    <!--  <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{year_of_release}">Age Error</div>-->
+
+    <label for="hall">Choose hall:</label>
+            <select th:object="${hall}" th:field="${hall.id}" id="hall">
+                <option th:each="haller : ${halls}" th:value="${haller.getId()}"
+                        th:text="${haller.getSerial_number()}"></option>
+            </select>
 
     <label for="film">Choose film:</label>
-    <select th:object="${film}" th:field="*{id}" id="film">
-        <option th:each="filmer : ${films}" th:value="${filmer.getId()}"
-                th:text="${filmer.getTitle()}"></option>
-    </select>
-    <label for="hall">Choose hall:</label>
-    <select th:object="${hall}" th:field="*{id}" id="hall">
-        <option th:each="hall : ${halls}" th:value="${hall.getId()}"
-                th:text="${hall.getSerial_number()}"></option>
-    </select>
+            <select th:object="${film}" th:field="${film.id}" id="film">
+                <option th:each="filmer : ${films}" th:value="${filmer.getId()}"
+                        th:text="${filmer.getTitle()}"></option>
+            </select>
     <input type="submit" value="Set session" />
 
 </form>

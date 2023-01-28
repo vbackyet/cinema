@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,10 @@ public class SessionController {
     public String show(Model model)
     {
         System.out.println("here we go");
+        System.out.println(SessionDAO.findAll().get(0).getCost());
+
         model.addAttribute("sessions" , SessionDAO.findAll());
+        model.addAttribute("films" , FilmDAO.findAll());
         return "sessions/show_all";
     }
 
@@ -58,13 +62,15 @@ public class SessionController {
         return "sessions/new";
     }
 
-    @PatchMapping("/new")
+    @PostMapping("/new")
     public String new_session(
             @ModelAttribute("session") Session session,
-                              @ModelAttribute("film") Film film,
-                              @ModelAttribute("hall") Hall hall)
-    {
-
+                                @ModelAttribute("film") Film film,
+                                @ModelAttribute("hall") Hall hall
+    ) throws ParseException {
+        System.out.println(hall.getId() + " !!!!!!!!!!!!!!!!!!");
+        System.out.println(film.getId() + " !!!!!!!!!!!!!!!!!!");
+        SessionDAO.save(session, film.getId(), hall.getId());
         return "redirect:/admin/panel/sessions/";
     }
 

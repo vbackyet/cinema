@@ -33,9 +33,14 @@ public class Hall {
                 "id=" + id +
                 ", serial_number=" + serial_number +
                 ", number_of_seats=" + number_of_seats +
-                ", sessions=" + sessions +
+//                ", sessions=" + sessions +
                 '}';
     }
+
+    public Hall(int id) {
+        this.id = id;
+    }
+
 }
 //    The page for working with movie halls contains a list of all movie halls created
 //        by an administrator. The administrator can create a movie hall with a certain

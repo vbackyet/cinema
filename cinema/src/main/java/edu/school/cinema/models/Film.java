@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Films")
 public class Film {
@@ -40,6 +39,9 @@ public class Film {
 
     @OneToMany(mappedBy = "film")
     private List<Session> sessions;
+
+
+
     @Override
     public String toString() {
         return "Film{" +
@@ -50,5 +52,17 @@ public class Film {
                 ", description='" + description + '\'' +
                 ", poster_for_a_movie='" + poster_for_a_movie + '\'' +
                 '}';
+    }
+
+    public Film(int id) {
+        this.id = id;
+    }
+
+    public Film(String title, int year_of_release, String age_restrictions, String description, String poster_for_a_movie) {
+        this.title = title;
+        this.year_of_release = year_of_release;
+        this.age_restrictions = age_restrictions;
+        this.description = description;
+        this.poster_for_a_movie = poster_for_a_movie;
     }
 }

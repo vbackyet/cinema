@@ -26,4 +26,11 @@ public class SessionsRepositoryEntityManagerImpl {
         return entityManager.createQuery("from Session", Session.class).getResultList();
     }
 
+    public void save(Session session) {
+
+//        entityManager.detach(session.getHall());
+//        entityManager.detach(session.getFilm());
+
+        entityManager.merge(session);
+    }
 }

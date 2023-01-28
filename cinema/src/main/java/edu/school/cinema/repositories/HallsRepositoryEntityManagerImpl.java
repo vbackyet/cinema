@@ -29,4 +29,10 @@ public class HallsRepositoryEntityManagerImpl {
     public void save(Hall hall) {
         entityManager.persist(hall);
     }
+
+    public Hall getById(int id) {
+            return entityManager.find(Hall.class, id);
+        }
+
+
 }

@@ -1,6 +1,7 @@
 package edu.school.cinema.services;
 
 
+import edu.school.cinema.models.Film;
 import edu.school.cinema.models.Hall;
 import edu.school.cinema.repositories.HallsRepositoryEntityManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,10 @@ public class HallService {
 
     public void save(Hall hall) {
         HALLDAO.save(hall);
+    }
+
+
+    public Hall getById(int id) {
+        return HALLDAO.getById(id);
     }
 }

@@ -1,14 +1,33 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>All halls</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div th:each="session : ${sessions}">-->
+<!--    <p th:value="${session.getId()}"> value </p>-->
+<!--&lt;!&ndash;    <a th:href="@{/admin/panel/halls/{id}(id=${session.getId()})}"&ndash;&gt;-->
+<!--&lt;!&ndash;       th:text="${session.getId()}">user</a>&ndash;&gt;-->
+<!--</div>-->
+
+
+
+<!--<a href="/admin/panel/sessions/new">Create new session!</a>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All halls</title>
+    <title>All movies</title>
 </head>
 <body>
 
-<div th:each="session : ${sessions}">
-    <a th:text="${session.getFilm().getTitle() + ', time: ' + session.getStartAt() +
-    ', hall_number: ' + session.getHall().getSerial_number()}">user</a>
+<div th:each="sessioner : ${sessions}">
+    <a th:text="${sessioner.getFilm().getTitle() + ', time: '+ sessioner.getStartAt() + ', hall_number: ' + sessioner.getHall().getSerial_number()}">user</a>
 
 </div>
 <a href="/admin/panel/sessions/new">Create new session!</a>
@@ -16,5 +35,21 @@
 </html>
 
 
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>All halls</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div th:text="${sessions.size()}"></div>-->
+
+<!--<a href="/admin/panel/sessions/new">Create new session!</a>-->
+<!--</body>-->
+<!--</html>-->
 
 
+<!--    <p th:text="*{session.getId()}">Welcome to our grocery store!</p>-->
+
+<!--    ${session.getFilm().getTitle() + ', time: ' + ', hall_number: ' + session.getHall().getSerial_number()}-->

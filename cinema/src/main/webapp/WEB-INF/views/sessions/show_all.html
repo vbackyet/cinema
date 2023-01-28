@@ -2,19 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All halls</title>
+    <title>All sessions</title>
 </head>
 <body>
 
-<div th:each="session : ${sessions}">
-    <a th:text="${session.getFilm().getTitle() + ', time: ' + session.getStartAt() +
-    ', hall_number: ' + session.getHall().getSerial_number()}">user</a>
+<div th:each="sessioner : ${sessions}">
+    <a th:text="${sessioner.getFilm().getTitle() + ', time: '+ sessioner.getStartAt() + ', hall_number: ' + sessioner.getHall().getSerial_number()}">user</a>
 
 </div>
 <a href="/admin/panel/sessions/new">Create new session!</a>
 </body>
 </html>
-
-
-
 
