@@ -9,7 +9,6 @@
 <div th:each="hall : ${halls}">
     <a th:href="@{/admin/panel/halls/{id}(id=${hall.getId()})}"
        th:text="${hall.getSerial_number() + ', seats: ' + hall.getNumber_of_seats()}">user</a>
-
 </div>
 <a href="/admin/panel/halls/new">Create new hall!</a>
 </body>

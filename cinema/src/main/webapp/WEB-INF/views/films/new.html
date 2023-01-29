@@ -6,25 +6,28 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/admin/panel/films/new}" th:object="${film}">
+<form th:method="POST" th:action="@{/admin/panel/films/new}" enctype="multipart/form-data">
   <label for="title">Enter title: </label>
-  <input type="text" th:field="*{title}" id="title"/>
+  <input type="text" th:field="${film.title}" id="title"/>
 <!--  <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{title}">Name Error</div>-->
   <br/>
   <label for="year_of_release">Enter year_of_release: </label>
-  <input type="text" th:field="*{year_of_release}" id="year_of_release"/>
+  <input type="text" th:field="${film.year_of_release}" id="year_of_release"/>
 <!--  <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{year_of_release}">Age Error</div>-->
   <br/>
   <label for="age_restrictions">Enter age restrictions: </label>
-  <input type="text" th:field="*{age_restrictions}" id="age_restrictions"/>
+  <input type="text" th:field="${film.age_restrictions}" id="age_restrictions"/>
 <!--  <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{age_restrictions}">Email Error</div>-->
   <br/>
   <label for="description">Enter description: </label>
-  <input type="text" th:field="*{description}" id="description"/>
+  <input type="text" th:field="${film.description}" id="description"/>
 <!--  <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{age_restrictions}">Email Error</div>-->
-  <br/>
-  <input type="submit" value="Create!"/>
+
+    <input type="file" th:name="file" accept="image/*" class="form-control-file">
+
+    <input type="submit" value="Create!"/>
 </form>
+
 
 </body>
 </html>
