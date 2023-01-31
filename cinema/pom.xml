@@ -17,7 +17,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-
+<!--    <servlet>-->
+<!--      <servlet-name>sonoojaiswal</servlet-name>-->
+<!--      <servlet-class>DemoServlet</servlet-class>-->
+<!--    </servlet>-->
     <spring.version>5.3.5</spring.version>
     <hibernate.version>5.4.28.Final</hibernate.version>
   </properties>
@@ -76,7 +79,11 @@
       <artifactId>thymeleaf-extras-java8time</artifactId>
       <version>3.0.4.RELEASE</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-shared-utils</artifactId>
+      <version>3.3.4</version>
+    </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -115,7 +122,12 @@
       <scope>provided</scope>
     </dependency>
 
-
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -130,7 +142,16 @@
       <version>2.4.7</version>
     </dependency>
   </dependencies>
-
+<!--  <servlets>-->
+<!--  <servlet>-->
+<!--    <servlet-name>customer</servlet-name>-->
+<!--    <servlet-class>common.servlets.Customers</servlet-class>-->
+<!--    <init-param>-->
+<!--      <param-name>version</param-name>-->
+<!--      <param-value>2.3.123</param-value>-->
+<!--    </init-param>-->
+<!--  </servlet>-->
+<!--  </servlets>-->
   <build>
     <finalName>spring-mvc-app1</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->

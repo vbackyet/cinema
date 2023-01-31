@@ -4,6 +4,8 @@ import java.nio.file.*;
 
 import org.springframework.web.multipart.MultipartFile;
 
+//import static jdk.internal.logger.DefaultLoggerFinder.SharedLoggers.application;
+
 public class FileUploadUtil {
 
     public static void saveFile(String uploadDir, String fileName,
@@ -21,4 +23,7 @@ public class FileUploadUtil {
             throw new IOException("Could not save image file: " + fileName, ioe);
         }
     }
+
+
+
 }

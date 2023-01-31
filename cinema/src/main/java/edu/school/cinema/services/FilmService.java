@@ -36,5 +36,9 @@ public class FilmService {
         Film film = FilmDAO.findById(id);
         FilmDAO.delete(film);
     }
+
+    public void merge(Film film) {
+        FilmDAO.merge(film);
+    }
 }
 

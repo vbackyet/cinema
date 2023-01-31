@@ -15,5 +15,12 @@
 <form th:method="DELETE" th:action="@{/admin/panel/films/{id}/delete(id=${film.getId()})}">
   <input type="submit" value="Delete"/>
 </form>
+
+<!--<h2 th:if="${film.getPoster_for_a_movie() == null}">-->
+            <form th:method="PATCH" th:action="@{/admin/panel/films/{id}/save_image(id=${film.getId()})}" enctype="multipart/form-data">
+            <input type="file" th:name="file" accept="image/*" class="form-control-file">
+             <input type="submit" value="Save"/>
+          </form>
+<!--</h2>-->
 </body>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
 import javax.servlet.annotation.MultipartConfig;
 import java.io.IOException;
 //A movie page contains a list of all movies created by an administrator. An
@@ -29,8 +30,8 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/admin/panel/films/")
 public class FilmController {
-
-      private final FilmService FilmDAO;
+    private static final String UPLOAD_DIRECTORY ="/images";
+    private final FilmService FilmDAO;
 
       @Autowired
       public FilmController(FilmService filmDAO) {
@@ -44,6 +45,22 @@ public class FilmController {
         return "films/show_all";
     }
 
+
+    @PostMapping("/{id}/save_image")
+    public String save_image(@PathVariable("id") int id, @RequestParam("file") MultipartFile multipartFile) throws IOException
+    {
+
+        System.out.println("HERERERERERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Film film  = FilmDAO.getById(id);
+        film.setPoster_for_a_movie(fileName);
+        System.out.println("Movie name :" + film.getPoster_for_a_movie());
+        String uploadDir = "user-photos/" + film.getId();
+        FilmDAO.merge(film);
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        return "redirect:/admin/panel/films/";
+    }
+//    films/11/save_image
 
     @GetMapping("/new")
     public String create_new(@ModelAttribute("film") Film film)
@@ -64,13 +81,12 @@ public class FilmController {
 
     @PostMapping("/new")
     public String create_new_film (@ModelAttribute("film") Film film, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(multipartFile);
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         film.setPoster_for_a_movie(fileName);
         FilmDAO.save(film);
         String uploadDir = "user-photos/" + film.getId();
-
+        System.out.println(uploadDir);
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return "redirect:/admin/panel/films/";
     }

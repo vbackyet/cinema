@@ -26,6 +26,8 @@ public class HallService {
         return HALLDAO.findAll();
     }
 
+
+
     public void save(Hall hall) {
         HALLDAO.save(hall);
     }

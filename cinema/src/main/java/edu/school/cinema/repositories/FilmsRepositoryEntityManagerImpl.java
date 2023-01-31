@@ -41,4 +41,8 @@ public class FilmsRepositoryEntityManagerImpl {
     public void delete(Film film) {
         entityManager.remove(film);
     }
+
+    public void merge(Film film) {
+        entityManager.merge(film);
+    }
 }
