@@ -3,6 +3,7 @@ package edu.school.cinema.controllers;
 
 import edu.school.cinema.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.MultipartConfig;
+import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 //A movie page contains a list of all movies created by an administrator. An
 //        administrator can add a movie. For each movie, the title, year of release,
 //        age restrictions, and a description are specified. It is also possible to upload
@@ -33,11 +36,13 @@ public class FilmController {
     private static final String UPLOAD_DIRECTORY ="/images";
     private final FilmService FilmDAO;
 
-      @Autowired
-      public FilmController(FilmService filmDAO) {
-        FilmDAO = filmDAO;
-    }
+  @Autowired
+  public FilmController(FilmService filmDAO) {
+    FilmDAO = filmDAO;
+}
 
+    @Value("${upload.path}")
+    private String uploadPath;
     @GetMapping()
     public String show(Model model)
     {
@@ -50,14 +55,32 @@ public class FilmController {
     public String save_image(@PathVariable("id") int id, @RequestParam("file") MultipartFile multipartFile) throws IOException
     {
 
-        System.out.println("HERERERERERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Film film  = FilmDAO.getById(id);
-        film.setPoster_for_a_movie(fileName);
-        System.out.println("Movie name :" + film.getPoster_for_a_movie());
-        String uploadDir = "user-photos/" + film.getId();
-        FilmDAO.merge(film);
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+//        System.out.println("HERERERERERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//        Film film  = FilmDAO.getById(id);
+//        film.setPoster_for_a_movie(fileName);
+//        System.out.println("Movie name :" + film.getPoster_for_a_movie());
+//        String uploadDir = "user-photos/" + film.getId();
+//        FilmDAO.merge(film);
+//        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+
+        if (multipartFile != null && !multipartFile.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + multipartFile.getOriginalFilename();
+
+            multipartFile.transferTo(new File(uploadPath + "/" + resultFilename));
+            Film film  = FilmDAO.getById(id);
+            film.setPoster_for_a_movie(resultFilename);
+            FilmDAO.merge(film);
+//            message.setFilename(resultFilename);
+        }
         return "redirect:/admin/panel/films/";
     }
 //    films/11/save_image

@@ -37,6 +37,7 @@ import java.util.Properties;
  */
 @Configuration
 @ComponentScan("edu.school.cinema")
+@PropertySource("classpath:application.properties")
 @PropertySource("classpath:hibernate.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories("edu.school.cinema.repositories")

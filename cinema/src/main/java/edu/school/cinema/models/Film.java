@@ -19,7 +19,6 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     @Column(name = "title")
     private String title;
 
