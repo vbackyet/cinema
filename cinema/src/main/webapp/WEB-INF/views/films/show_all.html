@@ -8,7 +8,7 @@
 
 <div th:each="film : ${films}">
     <a th:href="@{/admin/panel/films/{id}(id=${film.getId()})}" th:text="${film.getTitle()}">user</a>
-    <img th:src="@{/UrlForImage/images.jpeg}" th:if="${film.getPoster_for_a_movie() != null}">
+    <img th:if="${film.getPoster_for_a_movie() != null}" th:src="/UrlForImage/${film.getPoster_for_a_movie()}">
 </div>
 <a href="/admin/panel/films/new">Create new film!</a>
 </body>

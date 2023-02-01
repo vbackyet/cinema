@@ -107,6 +107,7 @@ public class FilmController {
         System.out.println(multipartFile);
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         film.setPoster_for_a_movie(fileName);
+
         FilmDAO.save(film);
         String uploadDir = "user-photos/" + film.getId();
         System.out.println(uploadDir);
