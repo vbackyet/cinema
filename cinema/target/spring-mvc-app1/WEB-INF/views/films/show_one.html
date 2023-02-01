@@ -17,7 +17,7 @@
 </form>
 
 <!--<h2 th:if="${film.getPoster_for_a_movie() == null}">-->
-            <form th:method="PATCH" th:action="@{/admin/panel/films/{id}/save_image(id=${film.getId()})}" enctype="multipart/form-data">
+          <form th:method="PATCH" th:action="@{/admin/panel/films/{id}/save_image(id=${film.getId()})}" enctype="multipart/form-data">
             <input type="file" th:name="file" accept="image/*" class="form-control-file">
              <input type="submit" value="Save"/>
           </form>
