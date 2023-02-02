@@ -38,17 +38,23 @@ public class SessionController {
         FilmDAO = filmDAO;
     }
 
+//    @GetMapping()
+//    public String show(Model model)
+//    {
+//        System.out.println("here we go");
+//        System.out.println(SessionDAO.findAll().get(0).getCost());
+//
+//        model.addAttribute("sessions" , SessionDAO.findAll());
+//        model.addAttribute("films" , FilmDAO.findAll());
+//        return "sessions/show_all";
+//    }
+
     @GetMapping()
     public String show(Model model)
     {
-        System.out.println("here we go");
-        System.out.println(SessionDAO.findAll().get(0).getCost());
-
-        model.addAttribute("sessions" , SessionDAO.findAll());
         model.addAttribute("films" , FilmDAO.findAll());
-        return "sessions/show_all";
+        return "AddUser";
     }
-
 
 
     @GetMapping("/new")

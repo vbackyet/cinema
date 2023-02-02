@@ -1,6 +1,7 @@
 package edu.school.cinema.controllers;
 
 
+import edu.school.cinema.models.JsonResponse;
 import edu.school.cinema.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 import edu.school.cinema.models.Film;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +52,34 @@ public class FilmController {
         model.addAttribute("films" , FilmDAO.findAll());
         return "films/show_all";
     }
+
+
+//    @GetMapping()
+//    public String show(Model model)
+//    {
+//        model.addAttribute("films" , FilmDAO.findAll());
+//        return "AddUser";
+//    }
+
+    @PostMapping()
+    public @ResponseBody JsonResponse show_in(BindingResult result , Model model){
+        JsonResponse res = new JsonResponse();
+        model.addAttribute("films" , FilmDAO.findAll());
+
+//        ValidationUtils.rejectIfEmpty(result, "name", "Name can not be empty.");
+//        ValidationUtils.rejectIfEmpty(result, "education", "Educatioan not be empty");
+        if(!result.hasErrors()){
+            res.setStatus("SUCCESS");
+//            res.setResult(userList);
+        }else{
+            res.setStatus("FAIL");
+//            res.setResult(result.getAllErrors());
+        }
+
+        return res;
+    }
+
+
 
 
     @PostMapping("/{id}/save_image")

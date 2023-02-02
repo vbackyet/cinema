@@ -1,6 +1,7 @@
 package edu.school.cinema.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -55,6 +56,8 @@ public class SpringConfig implements WebMvcConfigurer {
         this.env = env;
     }
 
+    @Value("${upload.path}")
+    private String uploadPath;
 /////////////////////////////////////////////////
 
 
@@ -65,6 +68,7 @@ public class SpringConfig implements WebMvcConfigurer {
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
+        templateResolver.setSuffix(".jsp");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
@@ -74,8 +78,10 @@ public class SpringConfig implements WebMvcConfigurer {
     @Override
 //    @Bean
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/UrlForImage/**")
-                .addResourceLocations("/WEB-INF/images/");
+        registry.addResourceHandler("/UrlForImage/**").addResourceLocations("file://" + uploadPath + "/" );
+//                .addResourceLocations("/WEB-INF/images/");
+
+//                .addResourceLocations("/WEB-INF/images/");
     }
 
     @Bean
