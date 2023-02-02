@@ -68,7 +68,7 @@ public class SpringConfig implements WebMvcConfigurer {
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
-        templateResolver.setSuffix(".jsp");
+//        templateResolver.setSuffix(".jsp");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
@@ -79,6 +79,7 @@ public class SpringConfig implements WebMvcConfigurer {
 //    @Bean
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/UrlForImage/**").addResourceLocations("file://" + uploadPath + "/" );
+        registry.addResourceHandler("/UrlForJSON/**").addResourceLocations("file://" + "/Users/vbackyet/Desktop/cinema/cinema/src/main/webapp/WEB-INF/views" + "/" );
 //                .addResourceLocations("/WEB-INF/images/");
 
 //                .addResourceLocations("/WEB-INF/images/");

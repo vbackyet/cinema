@@ -53,7 +53,7 @@ public class SessionController {
     public String show(Model model)
     {
         model.addAttribute("films" , FilmDAO.findAll());
-        return "AddUser";
+        return "sessions/AddUser";
     }
 
 

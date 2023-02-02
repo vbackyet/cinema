@@ -61,25 +61,6 @@ public class FilmController {
 //        return "AddUser";
 //    }
 
-    @PostMapping()
-    public @ResponseBody JsonResponse show_in(BindingResult result , Model model){
-        JsonResponse res = new JsonResponse();
-        model.addAttribute("films" , FilmDAO.findAll());
-
-//        ValidationUtils.rejectIfEmpty(result, "name", "Name can not be empty.");
-//        ValidationUtils.rejectIfEmpty(result, "education", "Educatioan not be empty");
-        if(!result.hasErrors()){
-            res.setStatus("SUCCESS");
-//            res.setResult(userList);
-        }else{
-            res.setStatus("FAIL");
-//            res.setResult(result.getAllErrors());
-        }
-
-        return res;
-    }
-
-
 
 
     @PostMapping("/{id}/save_image")
