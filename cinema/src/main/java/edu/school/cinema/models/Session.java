@@ -25,7 +25,7 @@ public class Session {
     private int id;
 
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "film_id", referencedColumnName = "id")
     private Film film;
 
@@ -35,7 +35,7 @@ public class Session {
     @Column(name = "start_at")
     private LocalDateTime startAt;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "hall_id", referencedColumnName = "id")
     private Hall hall;
 

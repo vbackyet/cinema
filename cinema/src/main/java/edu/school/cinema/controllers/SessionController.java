@@ -15,6 +15,8 @@ import edu.school.cinema.services.FilmService;
 import edu.school.cinema.services.HallService;
 import edu.school.cinema.services.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,12 +51,55 @@ public class SessionController {
 //        return "sessions/show_all";
 //    }
 
+//    @GetMapping()
+//    public String show(Model model)
+//    {
+//        model.addAttribute("films" , FilmDAO.findAll());
+//        return "sessions/AddUser";
+//    }
+
+//    @PostMapping(produces={"application/json"})
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public List<Session> listWithMarshalling()
+//    {
+////        model.addAttribute("films" , FilmDAO.findAll());
+//        System.out.println(SessionDAO.findAll());
+//        System.out.println("-----------------------------------------------");
+//        return SessionDAO.findAll();
+//    }
+
+    @ResponseBody
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam("filmName") String filmName) {
+        System.out.println("BUGAGA");
+//        List<SessionDTO> sessions = SessionDTO.fromEntities(this.sessionsService.findByFilmTitle(filmName));
+        return new ResponseEntity<>(SessionDAO.findAll(), HttpStatus.OK);
+    }
+
     @GetMapping()
-    public String show(Model model)
-    {
+    public String listWithView(Model model) {
+        // Call RESTful method to avoid repeating account lookup logic
         model.addAttribute("films" , FilmDAO.findAll());
+
+        // Return the view to use for rendering the response
         return "sessions/AddUser";
     }
+//    @RequestMapping(value="/accounts", produces={"application/xml", "application/json"})
+//    @ResponseStatus(HttpStatus.OK)
+//    public @ResponseBody List<Account> listWithMarshalling(Principal principal) {
+//        return accountManager.getAccounts(principal);
+//    }
+
+    // View-based method
+//    @RequestMapping("/accounts")
+//    public String listWithView(Model model, Principal principal) {
+//        // Call RESTful method to avoid repeating account lookup logic
+//        model.addAttribute( listWithMarshalling(principal) );
+//
+//        // Return the view to use for rendering the response
+//        return ¨accounts/list¨;
+//    }
 
 
     @GetMapping("/new")

@@ -44,7 +44,8 @@
       $('#state').val('');
       var searchField = $('#search').val();
       var expression = new RegExp(searchField, "i");
-      $.getJSON("/UrlForJSON/data.json", function(data) {
+      // $.getJSON("/UrlForJSON/data.json", function(data) {
+        $.getJSON("/admin/panel/sessions/search?filmName=sdfg", function(data) {
         $.each(data, function(key, value){
           if (value.name.search(expression) != -1 || value.location.search(expression) != -1)
           {

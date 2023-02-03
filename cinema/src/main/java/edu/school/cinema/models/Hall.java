@@ -1,6 +1,7 @@
 package edu.school.cinema.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ValueGenerationType;
 
@@ -24,6 +25,7 @@ public class Hall {
     @Column(name = "seats")
     private int number_of_seats;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "hall")
     private List<Session> sessions;
 

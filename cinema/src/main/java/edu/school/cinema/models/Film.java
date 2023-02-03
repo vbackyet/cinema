@@ -1,6 +1,7 @@
 package edu.school.cinema.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ValueGenerationType;
 
@@ -35,7 +36,7 @@ public class Film {
     @Column
     private String poster_for_a_movie;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "film")
     private List<Session> sessions;
 
