@@ -1,6 +1,10 @@
 package edu.school.cinema.models;
 
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +36,8 @@ public class Session {
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonIgnore
     @Column(name = "start_at")
     private LocalDateTime startAt;
 

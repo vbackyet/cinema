@@ -47,10 +47,13 @@
       // $.getJSON("/UrlForJSON/data.json", function(data) {
         $.getJSON("/admin/panel/sessions/search?filmName=sdfg", function(data) {
         $.each(data, function(key, value){
-          if (value.name.search(expression) != -1 || value.location.search(expression) != -1)
-          {
-            $('#result').append('<li class="list-group-item link-class"><img src="'+value.image+'" height="40" width="40" class="img-thumbnail" /> '+value.name+' | <span class="text-muted">'+value.location+'</span></li>');
-          }
+          // if (value.name.search(expression) != -1 || value.location.search(expression) != -1) {
+
+              $('#result').append('<li class="list-group-item link-class"><img src="'+  '/UrlForImage/' + value.film.poster_for_a_movie+'" height="40" width="40" class="img-thumbnail" /> '+value.film.title+' | <span class="text-muted">'+value.cost+'</span></li>');
+            // }
+          // $('#result').append('<li class="list-group-item link-class"><span class="text-muted">'+ value.id +'</span></li>');
+          // $('#result').append('<body> "Hello!" </body>');
+          // }
         });
       });
     });

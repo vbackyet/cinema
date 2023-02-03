@@ -16,6 +16,7 @@ import edu.school.cinema.services.HallService;
 import edu.school.cinema.services.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,11 +71,12 @@ public class SessionController {
 //    }
 
     @ResponseBody
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> search(@RequestParam("filmName") String filmName) {
         System.out.println("BUGAGA");
-//        List<SessionDTO> sessions = SessionDTO.fromEntities(this.sessionsService.findByFilmTitle(filmName));
-        return new ResponseEntity<>(SessionDAO.findAll(), HttpStatus.OK);
+        List<Session> sessions = SessionDAO.findAll();
+        System.out.println(sessions);
+        return new ResponseEntity<>(sessions, HttpStatus.OK);
     }
 
     @GetMapping()
