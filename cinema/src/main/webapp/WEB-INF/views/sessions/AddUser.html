@@ -30,9 +30,11 @@
   <div align="center">
     <input type="text" name="search" id="search" placeholder="Search Employee Details" class="form-control" />
   </div>
-  <ul class="list-group" id="result"></ul>
-  <br />
+<!--  <ul class="modal fade" id="result"></ul>-->
+  <div class="grid-container" id="result"></div>
+<!--  <br />-->
 </div>
+<!--    <div class="grid-container" id="result"></div>-->
 </body>
 </html>
 
@@ -45,15 +47,12 @@
       var searchField = $('#search').val();
       var expression = new RegExp(searchField, "i");
       // $.getJSON("/UrlForJSON/data.json", function(data) {
-        $.getJSON("/admin/panel/sessions/search?filmName=${expression}", function(data) {
+        $.getJSON("/admin/panel/sessions/search?filmName=zxcv", function(data) {
         $.each(data, function(key, value){
-          // if (value.name.search(expression) != -1 || value.location.search(expression) != -1) {
+          if (value.film.title.search(expression) != -1) {
 
               $('#result').append('<li class="list-group-item link-class"><img src="'+  '/UrlForImage/' + value.film.poster_for_a_movie+'" height="40" width="40" class="img-thumbnail" /> '+value.film.title+' | <span class="text-muted">'+value.cost+'</span></li>');
-            // }
-          // $('#result').append('<li class="list-group-item link-class"><span class="text-muted">'+ value.id +'</span></li>');
-          // $('#result').append('<body> "Hello!" </body>');
-          // }
+            }
         });
       });
     });
