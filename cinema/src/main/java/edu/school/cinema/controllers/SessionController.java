@@ -126,9 +126,8 @@ public class SessionController {
         SessionDAO.save(session, film.getId(), hall.getId());
         return "redirect:/admin/panel/sessions/";
     }
+//    https://www.youtube.com/watch?v=U4lqTmFmbAM
 
-
-//
 //
 //    @GetMapping("/new")
 //    public String create_new(@ModelAttribute("hall") Hall hall)

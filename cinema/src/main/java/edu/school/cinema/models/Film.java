@@ -40,6 +40,10 @@ public class Film {
     @OneToMany(mappedBy = "film")
     private List<Session> sessions;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "film")
+    private List<Message> messages;
+
 
 
     @Override
