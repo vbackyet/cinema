@@ -45,7 +45,7 @@ const sendMessage = (event) => {
             sender: username,
             content: messageInput.value,
             type: 'CHAT',
-            time: moment().calendar()
+            time: 'now'
         }
         stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage))
         messageInput.value = ''

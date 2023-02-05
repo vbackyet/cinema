@@ -7,7 +7,6 @@ import java.util.Date;
 //@Table(name = "messages")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class Message {
@@ -27,12 +26,19 @@ public class Message {
     private String content;
 
 //    @Column(name = "created_at", nullable = false)
-    private Date time;
+    private String time;
 
     private MessageType type;
 
     public Message( MessageType type, String username) {
         this.sender = username;
+        this.type = type;
+    }
+
+    public Message(String sender, String content, MessageType type, String time) {
+        this.sender = sender;
+        this.content = content;
+        this.time = time;
         this.type = type;
     }
 }
