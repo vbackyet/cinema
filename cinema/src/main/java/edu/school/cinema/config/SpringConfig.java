@@ -80,7 +80,7 @@ public class SpringConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/UrlForImage/**").addResourceLocations("file://" + uploadPath + "/" );
         registry.addResourceHandler("/UrlForJSON/**").addResourceLocations("file://" + "/Users/vbackyet/Desktop/cinema/cinema/src/main/webapp/WEB-INF/views" + "/" );
-       registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/static/").setCachePeriod(31556926);
+       registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/view/static/").setCachePeriod(31556926);
 //                .addResourceLocations("/WEB-INF/images/");
 
 //                .addResourceLocations("/WEB-INF/images/");

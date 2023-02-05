@@ -1,4 +1,4 @@
-package edu.school.cinema.models;
+package edu.school.cinema.filters;
 
 public enum MessageType {
     CHAT,

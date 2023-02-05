@@ -1,8 +1,8 @@
 package edu.school.cinema.listeners;
 
 
-import edu.school.cinema.models.Message;
-import edu.school.cinema.models.MessageType;
+import edu.school.cinema.filters.Message;
+import edu.school.cinema.filters.MessageType;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
