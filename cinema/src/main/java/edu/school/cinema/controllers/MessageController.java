@@ -16,7 +16,7 @@ public class MessageController {
     @SendTo("/topic/public")
     public Message sendMessage(final Message message)
     {
-        System.out.println(message.getContent());
+        System.out.println(message);
         return message;
     }
 
@@ -30,7 +30,9 @@ public class MessageController {
         return message;
     }
 
-    @GetMapping("chat")
+
+
+    @GetMapping("/films/{id}/chat/")
     public String show()
     {
         return "static/index";

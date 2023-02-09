@@ -35,10 +35,12 @@ public class Message {
         this.type = type;
     }
 
-    public Message(String sender, String content, MessageType type, String time) {
-        this.sender = sender;
-        this.content = content;
-        this.time = time;
-        this.type = type;
-    }
+//    public Message(String sender, String content, MessageType type, String time) {
+//        this.sender = sender;
+//        this.content = content;
+//        this.time = time;
+//        this.type = type;
+//    }
+
+
 }

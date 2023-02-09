@@ -44,8 +44,10 @@ const sendMessage = (event) => {
         const chatMessage = {
             sender: username,
             content: messageInput.value,
+            // time: '12345678900000000',
             type: 'CHAT',
-            time: 'now'
+            time: new Date(Date.now()).toISOString()
+
         }
         stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage))
         messageInput.value = ''
@@ -108,7 +110,7 @@ const onMessageReceived = (payload) => {
 const hashCode = (str) => {
     let hash = 0
     for (let i = 0; i < str.length; i++) {
-       hash = str.charCodeAt(i) + ((hash << 5) - hash)
+        hash = str.charCodeAt(i) + ((hash << 5) - hash)
     }
     return hash
 }
