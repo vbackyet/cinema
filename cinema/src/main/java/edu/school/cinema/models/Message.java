@@ -23,19 +23,18 @@ public class Message {
     @Column(name = "username", nullable = false)
     private String sender;
 
-    @Lob
+//    @Lob
     @Column(name = "message")
     private String content;
 
     @Column(name = "created_at", nullable = false)
     private Date time;
 
-    private MessageType type;
 
-    public Message( MessageType type, String username) {
+    public Message( String username) {
         this.sender = username;
-        this.type = type;
     }
+
 
 //    public Message(String sender, String content, MessageType type, String time) {
 //        this.sender = sender;

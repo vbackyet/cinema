@@ -5,6 +5,7 @@ package edu.school.cinema.filters;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Data
 @Getter
 @Setter
+@NoArgsConstructor
 public class MessageDTO {
 
     private Long film_id;
@@ -21,7 +23,13 @@ public class MessageDTO {
     private String message;
 
     private String type;
-    private String date;
+    private Date date;
+
+    public MessageDTO(MessageType disconnect, String username) {
+        user_name = username;
+        type = String.valueOf(disconnect);
+    }
+
 
 //    public Message toEntity() {
 //        Film film = new Film();

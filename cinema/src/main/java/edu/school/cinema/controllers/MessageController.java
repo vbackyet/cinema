@@ -4,6 +4,8 @@ package edu.school.cinema.controllers;
 import edu.school.cinema.filters.MessageDTO;
 import edu.school.cinema.models.Film;
 import edu.school.cinema.models.Message;
+import edu.school.cinema.services.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -14,17 +16,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.transaction.Transactional;
+
 @Controller
+
 @RequestMapping()
 public class MessageController {
+    private final MessageService MessageDAO;
+
+    @Autowired
+    public MessageController(MessageService messageDAO) {
+
+        MessageDAO = messageDAO;
+    }
+
     @MessageMapping("/chat.send/{id}")
     @SendTo("/topic/public/{id}")
     public MessageDTO sendMessage(final MessageDTO message,
     @DestinationVariable String id)
     {
-//        message.setFilm();
-        System.out.println(id);
-        System.out.println(message);
+//        System.out.println(message.getMessage() + " <---------- My message ");
+        MessageDAO.save(message);
         return message;
     }
 

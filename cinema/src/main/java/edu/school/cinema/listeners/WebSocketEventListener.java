@@ -1,6 +1,7 @@
 package edu.school.cinema.listeners;
 
 
+import edu.school.cinema.filters.MessageDTO;
 import edu.school.cinema.models.Message;
 import edu.school.cinema.filters.MessageType;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class WebSocketEventListener {
     {
         final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) headerAccessor.getSessionAttributes().get("username");
-        final Message message = new Message(MessageType.DISCONNECT, username);
+        final MessageDTO message = new MessageDTO(MessageType.DISCONNECT, username);
 //        LOGGER.info("Пук пук - коннект пропал");
         sendingOperations.convertAndSend("/topic/public", message);
     }
