@@ -2,10 +2,10 @@
 
 let stompClient
 let username
-
+let filmId
 const connect = (event) => {
     username = document.querySelector('#username').value.trim()
-
+    filmId = document.querySelector('#film_id').value.trim()
     if (username) {
         const login = document.querySelector('#login')
         login.classList.add('hide')
@@ -20,11 +20,19 @@ const connect = (event) => {
     event.preventDefault()
 }
 
+
+// stompClient.subscribe(`/films/${filmId}/chat/messages`,
+//     function(messageOutput) {
+//     const message = JSON.parse(messageOutput.body)
+//     if (message && message.id > 0 && message.created_at) {
+//         showMessage(message)
+//     }
+
 const onConnected = () => {
-    stompClient.subscribe('/topic/public', onMessageReceived)
-    stompClient.send("/app/chat.newUser",
+    stompClient.subscribe(`/topic/public/${filmId}`, onMessageReceived) //подписывается на этот канал
+    stompClient.send(`/app/chat.newUser/${filmId}`,
         {},
-        JSON.stringify({sender: username, type: 'CONNECT'})
+        JSON.stringify({user_name: username, type: 'CONNECT', film_id:filmId})
     )
     const status = document.querySelector('#status')
     status.className = 'hide'
@@ -42,18 +50,26 @@ const sendMessage = (event) => {
 
     if (messageContent && stompClient) {
         const chatMessage = {
-            sender: username,
-            content: messageInput.value,
+            user_name: username,
+            message: messageInput.value + filmId,
+            film_id: filmId,
             // time: '12345678900000000',
             type: 'CHAT',
-            time: new Date(Date.now()).toISOString()
+            date: new Date(Date.now()).toISOString()
 
         }
-        stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage))
+
+        stompClient.send("/app/chat.send/" + filmId, {}, JSON.stringify(chatMessage))
         messageInput.value = ''
     }
     event.preventDefault();
 }
+
+$(document).ready(function() {
+    filmId = $('input[name="film_id"]').val()
+    connect()
+});
+
 
 
 const onMessageReceived = (payload) => {
@@ -73,10 +89,10 @@ const onMessageReceived = (payload) => {
 
     if (message.type === 'CONNECT') {
         messageElement.classList.add('event-message')
-        message.content = message.sender + ' connected!'
+        message.content = message.user_name + ' connected!'
     } else if (message.type === 'DISCONNECT') {
         messageElement.classList.add('event-message')
-        message.content = message.sender + ' left!'
+        message.content = message.user_name + ' left!'
     } else {
         messageElement.classList.add('chat-message')
 
@@ -84,12 +100,12 @@ const onMessageReceived = (payload) => {
         avatarContainer.className = 'img_cont_msg'
         const avatarElement = document.createElement('div')
         avatarElement.className = 'circle user_img_msg'
-        const avatarText = document.createTextNode(message.sender[0])
+        const avatarText = document.createTextNode(message.user_name[0])
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender)
+        avatarElement.style['background-color'] = getAvatarColor(message.user_name)
         avatarContainer.appendChild(avatarElement)
 
-        messageElement.style['background-color'] = getAvatarColor(message.sender)
+        messageElement.style['background-color'] = getAvatarColor(message.user_name)
 
         flexBox.appendChild(avatarContainer)
 
@@ -100,7 +116,7 @@ const onMessageReceived = (payload) => {
 
     }
 
-    messageElement.innerHTML = message.content
+    messageElement.innerHTML = message.message
 
     const chat = document.querySelector('#chat')
     chat.appendChild(flexBox)

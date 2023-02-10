@@ -2,7 +2,6 @@ package edu.school.cinema.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.school.cinema.filters.Message;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,9 +39,9 @@ public class Film {
     @OneToMany(mappedBy = "film")
     private List<Session> sessions;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "film")
-//    private List<Message> messages;
+    @JsonIgnore
+    @OneToMany(mappedBy = "film")
+    private List<Message> messages;
 
 
 

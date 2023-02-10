@@ -1,32 +1,34 @@
-package edu.school.cinema.filters;
+package edu.school.cinema.models;
+import edu.school.cinema.filters.MessageType;
+import edu.school.cinema.models.Film;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-//@Table(name = "messages")
+@Entity
+@Table(name = "messages")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 public class Message {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-//    @JoinColumn(name = "film_id", nullable = false)
-//    private Film film;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "film_id", nullable = false)
+    private Film film;
 
-//    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false)
     private String sender;
 
     @Lob
-//    @Column(name = "message")
+    @Column(name = "message")
     private String content;
 
-//    @Column(name = "created_at", nullable = false)
-    private String time;
+    @Column(name = "created_at", nullable = false)
+    private Date time;
 
     private MessageType type;
 
