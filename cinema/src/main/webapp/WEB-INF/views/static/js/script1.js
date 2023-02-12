@@ -2,10 +2,35 @@
 
 let stompClient
 let username
+let messages
 let filmId
+let flag = false;
+// let data1
+// const obj;
+// const connect = (event) => {
+//     username = document.querySelector('#username').value.trim()
+//     filmId = document.querySelector('#film_id').value.trim()
+//     // messages = document.querySelector('#messages').value.trim()
+//     // data1 = JSON.parse(messages);
+//     if (username) {
+//         const login = document.querySelector('#login')
+//         login.classList.add('hide')
+//
+//         const chatPage = document.querySelector('#chat-page')
+//         chatPage.classList.remove('hide')
+//
+//         const socket = new SockJS('/chat-example')
+//         stompClient = Stomp.over(socket)
+//         stompClient.connect({}, onConnected, onError)
+//     }
+//     event.preventDefault()
+// }
+
 const connect = (event) => {
     username = document.querySelector('#username').value.trim()
+    messages = document.querySelector('#messages').value.trim()
     filmId = document.querySelector('#film_id').value.trim()
+
     if (username) {
         const login = document.querySelector('#login')
         login.classList.add('hide')
@@ -36,6 +61,7 @@ const onConnected = () => {
     )
     const status = document.querySelector('#status')
     status.className = 'hide'
+
 }
 
 const onError = (error) => {
@@ -70,6 +96,54 @@ $(document).ready(function() {
     connect()
 });
 
+
+
+const printAllMessages = (message, chatCard) => {
+    let i = 0;
+    const obj = null;
+    // const obj = JSON.parse(messages);
+    $.getJSON('http://localhost:8080/messages/search?filmName', function(data) {
+        Object.keys(data).forEach(function(key)
+        {
+            // document.write(data[key]["sender"])
+            let sender = data[key]["sender"]
+            let message = data[key]["content"]
+            let time1 = data[key]["time"]
+            const flexBox = document.createElement('div')
+            flexBox.className = 'd-flex justify-content-end mb-4'
+            chatCard.appendChild(flexBox)
+
+            const messageElement = document.createElement('div')
+            messageElement.className = 'msg_container_send'
+
+            flexBox.appendChild(messageElement)
+            messageElement.classList.add('chat-message')
+
+            const avatarContainer = document.createElement('div')
+            avatarContainer.className = 'img_cont_msg'
+            const avatarElement = document.createElement('div')
+            avatarElement.className = 'circle user_img_msg'
+            const avatarText = document.createTextNode(sender[0])
+            avatarElement.appendChild(avatarText);
+            avatarElement.style['background-color'] = getAvatarColor(sender)
+            avatarContainer.appendChild(avatarElement)
+
+            messageElement.style['background-color'] = getAvatarColor(sender)
+
+            flexBox.appendChild(avatarContainer)
+
+            const time = document.createElement('span')
+            time.className = 'msg_time_send'
+            time.innerHTML = time1
+            messageElement.appendChild(time)
+            messageElement.innerHTML = message
+
+            const chat = document.querySelector('#chat')
+            chat.appendChild(flexBox)
+            chat.scrollTop = chat.scrollHeight
+        })
+    });
+}
 
 
 const onMessageReceived = (payload) => {
@@ -114,6 +188,12 @@ const onMessageReceived = (payload) => {
         time.innerHTML = message.time
         messageElement.appendChild(time)
 
+    }
+
+    if ((!flag)) {
+        printAllMessages(message, chatCard)
+        flag = true
+        return
     }
 
     messageElement.innerHTML = message.message

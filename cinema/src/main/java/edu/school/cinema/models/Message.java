@@ -1,4 +1,5 @@
 package edu.school.cinema.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.school.cinema.filters.MessageType;
 import edu.school.cinema.models.Film;
 import lombok.*;
@@ -27,6 +28,8 @@ public class Message {
     @Column(name = "message")
     private String content;
 
+
+//    @JsonIgnore
     @Column(name = "created_at", nullable = false)
     private Date time;
 

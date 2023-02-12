@@ -27,6 +27,8 @@
             <form id="login-form" name="login-form">
                 <div class="input-group">
                     <input id="film_id" type="hidden" name="film_id" th:value="${film.id}" hidden>
+
+                    <input id="messages" type="hidden" name="messages" th:value="${messages}" hidden>
                     <input id="username" type="text" class="form-control all-input" autocomplete="off" placeholder="Username" />
                     <div class="input-group-append">
                         <button class="fas fa-location-arrow" type="submit"></button>
