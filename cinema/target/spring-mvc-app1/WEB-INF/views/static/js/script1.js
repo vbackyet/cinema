@@ -1,32 +1,40 @@
-'use strict'
+// 'use strict'
 
 let stompClient
 let username
 let messages
 let filmId
 let flag = false;
-// let data1
-// const obj;
-// const connect = (event) => {
-//     username = document.querySelector('#username').value.trim()
-//     filmId = document.querySelector('#film_id').value.trim()
-//     // messages = document.querySelector('#messages').value.trim()
-//     // data1 = JSON.parse(messages);
-//     if (username) {
-//         const login = document.querySelector('#login')
-//         login.classList.add('hide')
-//
-//         const chatPage = document.querySelector('#chat-page')
-//         chatPage.classList.remove('hide')
-//
-//         const socket = new SockJS('/chat-example')
-//         stompClient = Stomp.over(socket)
-//         stompClient.connect({}, onConnected, onError)
-//     }
-//     event.preventDefault()
-// }
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+
+
+
 
 const connect = (event) => {
+
     username = document.querySelector('#username').value.trim()
     messages = document.querySelector('#messages').value.trim()
     filmId = document.querySelector('#film_id').value.trim()
@@ -60,9 +68,20 @@ const onConnected = () => {
         JSON.stringify({user_name: username, type: 'CONNECT', film_id:filmId})
     )
     const status = document.querySelector('#status')
+    setCookie('chat',username,7);
     status.className = 'hide'
+}
+
+const onConnected2 = () => {
+    // alert(username)
+    stompClient.subscribe(`/topic/public/${filmId}`, onMessageReceived) //подписывается на этот канал
+    stompClient.send(`/app/chat.newUser/${filmId}`,
+        {},
+        JSON.stringify({user_name: username, type: 'CONNECT', film_id:filmId})
+    )
 
 }
+
 
 const onError = (error) => {
     const status = document.querySelector('#status')
@@ -76,8 +95,8 @@ const sendMessage = (event) => {
 
     if (messageContent && stompClient) {
         const chatMessage = {
-            user_name: username,
-            message: messageInput.value + filmId,
+            user_name: getCookie('chat'),
+            message: messageInput.value,
             film_id: filmId,
             // time: '12345678900000000',
             type: 'CHAT',
@@ -143,44 +162,6 @@ const printAllMessages = (message, chatCard) => {
             chat.scrollTop = chat.scrollHeight
         })
     });
-    // document.write(obj);
-    // while( i < 4) {
-    //
-    //     // message = obj[i];
-    //     const flexBox = document.createElement('div')
-    //     flexBox.className = 'd-flex justify-content-end mb-4'
-    //     chatCard.appendChild(flexBox)
-    //
-    //     const messageElement = document.createElement('div')
-    //     messageElement.className = 'msg_container_send'
-    //
-    //     flexBox.appendChild(messageElement)
-    //     messageElement.classList.add('chat-message')
-    //
-    //     const avatarContainer = document.createElement('div')
-    //     avatarContainer.className = 'img_cont_msg'
-    //     const avatarElement = document.createElement('div')
-    //     avatarElement.className = 'circle user_img_msg'
-    //     const avatarText = document.createTextNode(message.user_name[0])
-    //     avatarElement.appendChild(avatarText);
-    //     avatarElement.style['background-color'] = getAvatarColor(message.user_name)
-    //     avatarContainer.appendChild(avatarElement)
-    //
-    //     messageElement.style['background-color'] = getAvatarColor(message.user_name)
-    //
-    //     flexBox.appendChild(avatarContainer)
-    //
-    //     const time = document.createElement('span')
-    //     time.className = 'msg_time_send'
-    //     time.innerHTML = message.date
-    //     messageElement.appendChild(time)
-    //     messageElement.innerHTML = message.message
-    //
-    //     const chat = document.querySelector('#chat')
-    //     chat.appendChild(flexBox)
-    //     chat.scrollTop = chat.scrollHeight
-    //     i++
-    // }
 }
 
 
@@ -227,7 +208,7 @@ const onMessageReceived = (payload) => {
         messageElement.appendChild(time)
 
     }
-
+    alert(flag)
     if ((!flag)) {
         printAllMessages(message, chatCard)
         flag = true
@@ -256,7 +237,31 @@ const getAvatarColor = (messageSender) => {
     return colours[index]
 }
 
-const loginForm = document.querySelector('#login-form')
-loginForm.addEventListener('submit', connect, true)
-const messageControls = document.querySelector('#message-controls')
-messageControls.addEventListener('submit', sendMessage, true)
+var x = getCookie('chat');
+// alert(x)
+if (x) {
+    username = x;
+    // alert(username)
+    const login = document.querySelector('#login')
+    login.classList.add('hide')
+
+    const chatPage = document.querySelector('#chat-page')
+    chatPage.classList.remove('hide')
+    const socket = new SockJS('/chat-example')
+    stompClient = Stomp.over(socket)
+    // alert(username)
+    stompClient.connect({}, onConnected2, onError)
+
+    const messageControls = document.querySelector('#message-controls')
+    messageControls.addEventListener('submit', sendMessage, true)
+}
+else
+{
+    const login = document.querySelector('#login')
+    login.classList.remove('hide')
+
+    const loginForm = document.querySelector('#login-form')
+    loginForm.addEventListener('submit', connect, true)
+    const messageControls = document.querySelector('#message-controls')
+    messageControls.addEventListener('submit', sendMessage, true)
+}
