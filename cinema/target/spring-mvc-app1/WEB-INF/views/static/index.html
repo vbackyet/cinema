@@ -16,6 +16,7 @@
 </head>
 <body>
 
+
 <div class="container-fluid h-100">
 
     <div id="status" class="login">
@@ -27,6 +28,7 @@
             <form id="login-form" name="login-form">
                 <div class="input-group">
                     <input id="film_id" type="hidden" name="film_id" th:value="${film.id}" hidden>
+<!--                    <input id="user_id" type="hidden" name="messages" th:value="${user_id}" hidden>-->
 
                     <input id="messages" type="hidden" name="messages" th:value="${messages}" hidden>
                     <input id="username" type="text" class="form-control all-input" autocomplete="off" placeholder="Username" />
@@ -60,12 +62,19 @@
                     </div>
 
                     <form id="message-controls" name="message-controls" class="card-footer">
+<!--                        <script th:inline="javascript">-->
+<!--                            let user_id = /*[[${user_id}]]*/;-->
+<!--                        </script>-->
                         <div class="input-group">
                             <textarea id="message" class="form-control all-input" placeholder="Type your message..."></textarea>
                             <div class="input-group-append">
                                 <button class="fas fa-location-arrow" type="submit"></button>
                             </div>
                         </div>
+                    </form>
+                    <form th:method="POST" id="some-random-id" enctype="multipart/form-data" >
+                        <input type="file" th:name="file" accept="image/*" class="form-control-file">
+                            <input type="submit" value="Отправить фото">
                     </form>
                 </div>
             </div>

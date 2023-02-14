@@ -67,15 +67,6 @@ public class FilmController {
     public String save_image(@PathVariable("id") int id, @RequestParam("file") MultipartFile multipartFile) throws IOException
     {
 
-//        System.out.println("HERERERERERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//        Film film  = FilmDAO.getById(id);
-//        film.setPoster_for_a_movie(fileName);
-//        System.out.println("Movie name :" + film.getPoster_for_a_movie());
-//        String uploadDir = "user-photos/" + film.getId();
-//        FilmDAO.merge(film);
-//        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
 
         if (multipartFile != null && !multipartFile.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);

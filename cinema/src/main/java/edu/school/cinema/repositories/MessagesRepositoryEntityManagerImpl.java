@@ -3,6 +3,7 @@ package edu.school.cinema.repositories;
 import edu.school.cinema.models.Hall;
 import edu.school.cinema.models.Message;
 import edu.school.cinema.models.Session;
+import edu.school.cinema.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,6 +34,7 @@ public class MessagesRepositoryEntityManagerImpl {
 //        entityManager.detach(session.getFilm());
 
         entityManager.merge(message);
+
     }
 
     public Message findById(int id) {
@@ -41,5 +43,21 @@ public class MessagesRepositoryEntityManagerImpl {
 
     public void delete(Message message) {
         entityManager.remove(message);
+    }
+
+    public int saveUser(User newUser) {
+        entityManager.persist(newUser);
+//        System.out.println(newUser.getId() + " ---------------------");
+        return newUser.getId();
+    }
+
+
+
+    public User getUserById(int user_id) {
+       return  entityManager.find(User.class, user_id);
+    }
+
+    public void merge(User user) {
+        entityManager.merge(user);
     }
 }

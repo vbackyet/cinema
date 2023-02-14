@@ -2,6 +2,7 @@ package edu.school.cinema.services;
 
 import edu.school.cinema.filters.MessageDTO;
 import edu.school.cinema.models.Message;
+import edu.school.cinema.models.User;
 import edu.school.cinema.repositories.FilmsRepositoryEntityManagerImpl;
 import edu.school.cinema.repositories.MessagesRepositoryEntityManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +28,42 @@ public class MessageService {
         return MessageDAO.findAll();
     }
 
-    public void save(MessageDTO message) {
+    public Message save(MessageDTO message) {
         Message new_message = new Message();
         new_message.setFilm(FilmDAO.getById(Math.toIntExact(message.getFilm_id())));
         new_message.setContent(message.getMessage());
         new_message.setTime(message.getDate());
-        new_message.setSender(message.getUser_name());
+        User my_user = MessageDAO.getUserById(message.getUser_id());
+        new_message.setSender(my_user);
+//        User new_user = new User(message.getUser_name());
+//        new_message.setSender(new_user);
 
         MessageDAO.save(new_message);
+        return new_message;
+
     }
 
     public Message getById(int id) {
         return MessageDAO.findById(id);
     }
 
+    public User getUserById(int id) {
+        return MessageDAO.getUserById(id);
+    }
+
     public void delete(int id) {
         Message film = MessageDAO.findById(id);
         MessageDAO.delete(film);
+
+    }
+
+    public int saveUser(User newUser) {
+        return MessageDAO.saveUser(newUser);
+
+    }
+
+    public void merge(User user) {
+        MessageDAO.merge(user);
 
     }
 

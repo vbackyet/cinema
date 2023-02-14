@@ -3,7 +3,8 @@
 let stompClient
 let username
 let messages
-let filmId
+let filmId;
+let userId;
 let flag = false;
 
 function setCookie(name,value,days) {
@@ -18,7 +19,7 @@ function setCookie(name,value,days) {
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
+    for(var i=0; i < ca.length;i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1,c.length);
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
@@ -38,6 +39,7 @@ const connect = (event) => {
     username = document.querySelector('#username').value.trim()
     messages = document.querySelector('#messages').value.trim()
     filmId = document.querySelector('#film_id').value.trim()
+    // alert(document.querySelector('#bugaga').value.trim())
 
     if (username) {
         const login = document.querySelector('#login')
@@ -92,13 +94,14 @@ const onError = (error) => {
 const sendMessage = (event) => {
     const messageInput = document.querySelector('#message')
     const messageContent = messageInput.value.trim()
-
+    alert(userId)
     if (messageContent && stompClient) {
         const chatMessage = {
             user_name: getCookie('chat'),
             message: messageInput.value,
             film_id: filmId,
             // time: '12345678900000000',
+            user_id: userId,
             type: 'CHAT',
             date: new Date(Date.now()).toISOString()
 
@@ -110,10 +113,18 @@ const sendMessage = (event) => {
     event.preventDefault();
 }
 
-$(document).ready(function() {
-    filmId = $('input[name="film_id"]').val()
-    connect()
-});
+
+const imagesave = (event) => {
+    alert(name)
+
+}
+
+
+
+// $(document).ready(function() {
+//     filmId = $('input[name="film_id"]').val()
+//     connect()
+// });
 
 
 
@@ -125,7 +136,7 @@ const printAllMessages = (message, chatCard) => {
         Object.keys(data).forEach(function(key)
         {
             // document.write(data[key]["sender"])
-            let sender = data[key]["sender"]
+            let sender = data[key]["sender"]["username"]
             let message = data[key]["content"]
             let time1 = data[key]["time"]
             const flexBox = document.createElement('div')
@@ -180,10 +191,13 @@ const onMessageReceived = (payload) => {
 
     flexBox.appendChild(messageElement)
 
-    if (message.type === 'CONNECT') {
+    if (message.type == 'CONNECT') {
         messageElement.classList.add('event-message')
-        message.content = message.user_name + ' connected!'
-    } else if (message.type === 'DISCONNECT') {
+        userId = message.user_id
+
+        // form.setAttribute("th:action", "@{/chat/save/3}")
+ // message.content = message.user_name + ' connected!'
+    } else if (message.type == 'DISCONNECT') {
         messageElement.classList.add('event-message')
         message.content = message.user_name + ' left!'
     } else {
@@ -208,7 +222,7 @@ const onMessageReceived = (payload) => {
         messageElement.appendChild(time)
 
     }
-    alert(flag)
+    // alert(flag)
     if ((!flag)) {
         printAllMessages(message, chatCard)
         flag = true
@@ -238,6 +252,8 @@ const getAvatarColor = (messageSender) => {
 }
 
 var x = getCookie('chat');
+const form = document.querySelector("#some-random-id")
+form.setAttribute("action", "/chat/save/3")
 // alert(x)
 if (x) {
     username = x;
@@ -254,6 +270,9 @@ if (x) {
 
     const messageControls = document.querySelector('#message-controls')
     messageControls.addEventListener('submit', sendMessage, true)
+    // document.getElementById('user_id').innerText = "3";
+    // const imageControls = document.querySelector('#image-controls')
+    // imageControls.addEventListener('submit', imagesave, true)
 }
 else
 {
@@ -264,4 +283,7 @@ else
     loginForm.addEventListener('submit', connect, true)
     const messageControls = document.querySelector('#message-controls')
     messageControls.addEventListener('submit', sendMessage, true)
+    //
+    // const imageControls = document.querySelector('#image-controls')
+    // imageControls.addEventListener('submit', imagesave, true)
 }

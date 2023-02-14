@@ -21,8 +21,9 @@ public class Message {
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
 
-    @Column(name = "username", nullable = false)
-    private String sender;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User sender;
 
 //    @Lob
     @Column(name = "message")
@@ -34,8 +35,8 @@ public class Message {
     private Date time;
 
 
-    public Message( String username) {
-        this.sender = username;
+    public Message(User newUser) {
+        this.setSender(newUser);
     }
 
 

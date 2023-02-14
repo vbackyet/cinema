@@ -22,6 +22,9 @@ public class MessageDTO {
 
     private String message;
 
+
+    private int user_id;
+
     private String type;
     private Date date;
 
