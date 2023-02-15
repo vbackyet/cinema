@@ -1,15 +1,13 @@
 package edu.school.cinema.repositories;
 
-import edu.school.cinema.models.Hall;
 import edu.school.cinema.models.Message;
-import edu.school.cinema.models.Session;
 import edu.school.cinema.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -60,4 +58,16 @@ public class MessagesRepositoryEntityManagerImpl {
     public void merge(User user) {
         entityManager.merge(user);
     }
+
+    public List<Message> findAllByFilmId(int id)
+    {
+        TypedQuery<Message> query = entityManager.createQuery(
+                "SELECT m FROM Message m WHERE m.film.id = :id ORDER BY m.time", Message.class
+        );
+        query.setParameter("id", id);
+        query.setMaxResults(20);
+        System.out.println(query.getResultList() + "   <---- MY RESULT");
+        return query.getResultList();
+    }
+
 }

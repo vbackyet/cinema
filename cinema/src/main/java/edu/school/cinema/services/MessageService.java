@@ -67,6 +67,10 @@ public class MessageService {
 
     }
 
+    public List<Message> findAllByFilmId(int id) {
+        return MessageDAO.findAllByFilmId(id);
+    }
+
 
 //    public void merge(Film film) {
 //        FilmDAO.merge(film);

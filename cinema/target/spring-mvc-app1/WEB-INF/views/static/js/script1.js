@@ -39,7 +39,6 @@ const connect = (event) => {
     username = document.querySelector('#username').value.trim()
     messages = document.querySelector('#messages').value.trim()
     filmId = document.querySelector('#film_id').value.trim()
-    // alert(document.querySelector('#bugaga').value.trim())
 
     if (username) {
         const login = document.querySelector('#login')
@@ -70,17 +69,29 @@ const onConnected = () => {
         JSON.stringify({user_name: username, type: 'CONNECT', film_id:filmId})
     )
     const status = document.querySelector('#status')
-    setCookie('chat',username,7);
+
     status.className = 'hide'
 }
 
 const onConnected2 = () => {
-    // alert(username)
+    // alert("onConnected2")
     stompClient.subscribe(`/topic/public/${filmId}`, onMessageReceived) //подписывается на этот канал
     stompClient.send(`/app/chat.newUser/${filmId}`,
         {},
-        JSON.stringify({user_name: username, type: 'CONNECT', film_id:filmId})
+        JSON.stringify({
+            user_name: null,
+            message: null,
+            film_id: filmId,
+            // time: '12345678900000000',
+            user_id: getCookie("chat"),
+            type: 'RECONNECT',
+            date: new Date(Date.now()).toISOString()
+
+        })
     )
+    const status = document.querySelector('#status')
+
+    status.className = 'hide'
 
 }
 
@@ -94,14 +105,13 @@ const onError = (error) => {
 const sendMessage = (event) => {
     const messageInput = document.querySelector('#message')
     const messageContent = messageInput.value.trim()
-    alert(userId)
     if (messageContent && stompClient) {
         const chatMessage = {
-            user_name: getCookie('chat'),
+            user_name: username,
             message: messageInput.value,
             film_id: filmId,
             // time: '12345678900000000',
-            user_id: userId,
+            user_id: getCookie('chat'),
             type: 'CHAT',
             date: new Date(Date.now()).toISOString()
 
@@ -132,13 +142,14 @@ const printAllMessages = (message, chatCard) => {
     let i = 0;
     const obj = null;
     // const obj = JSON.parse(messages);
-    $.getJSON('http://localhost:8080/messages/search?filmName', function(data) {
+    $.getJSON('http://localhost:8080/messages/search?filmName=' + filmId, function(data) {
         Object.keys(data).forEach(function(key)
         {
             // document.write(data[key]["sender"])
             let sender = data[key]["sender"]["username"]
             let message = data[key]["content"]
             let time1 = data[key]["time"]
+            let image = data[key]["sender"]["user_avatar"]
             const flexBox = document.createElement('div')
             flexBox.className = 'd-flex justify-content-end mb-4'
             chatCard.appendChild(flexBox)
@@ -149,15 +160,36 @@ const printAllMessages = (message, chatCard) => {
             flexBox.appendChild(messageElement)
             messageElement.classList.add('chat-message')
 
-            const avatarContainer = document.createElement('div')
-            avatarContainer.className = 'img_cont_msg'
-            const avatarElement = document.createElement('div')
-            avatarElement.className = 'circle user_img_msg'
-            const avatarText = document.createTextNode(sender[0])
-            avatarElement.appendChild(avatarText);
-            avatarElement.style['background-color'] = getAvatarColor(sender)
-            avatarContainer.appendChild(avatarElement)
+            // alert(image)
+            // if (!image) {
+            //     // картинка
+            //     const avatarContainer = document.createElement('div')
+            //     avatarContainer.className = 'img_cont_msg'
+            //     const avatarElement = document.createElement('div')
+            //     avatarElement.className = 'circle user_img_msg'
+            //     const avatarText = document.createTextNode(sender[0])
+            //     avatarElement.appendChild(avatarText);
+            //     avatarElement.style['background-color'] = getAvatarColor(sender)
+            //     avatarContainer.appendChild(avatarElement)
+            // }
+            // else {
 
+                ///////////////////////
+                ////////// новая катинка //////////
+
+                const avatarContainer = document.createElement('div')
+                avatarContainer.className = 'img_cont_msg'
+                var img = document.createElement("img");
+                img.src = "/UrlForImage/" + "avatar/" + image;
+                img.height = 50;
+                img.width = 50;
+                avatarContainer.appendChild(img)
+                // var src = document.getElementById("header");
+                // src.appendChild(img);
+            // }
+
+
+            /////////////////////////////////////
             messageElement.style['background-color'] = getAvatarColor(sender)
 
             flexBox.appendChild(avatarContainer)
@@ -177,6 +209,7 @@ const printAllMessages = (message, chatCard) => {
 
 
 const onMessageReceived = (payload) => {
+
     const message = JSON.parse(payload.body);
 
     const chatCard = document.createElement('div')
@@ -190,27 +223,60 @@ const onMessageReceived = (payload) => {
     messageElement.className = 'msg_container_send'
 
     flexBox.appendChild(messageElement)
-
+    // alert(message.type + "  THE TYPE")
     if (message.type == 'CONNECT') {
         messageElement.classList.add('event-message')
         userId = message.user_id
-
+        setCookie('chat',userId,7);
+        const form = document.querySelector("#some-random-id")
+        form.setAttribute("action", "/chat/save/" + userId + "/" + filmId + "/")
         // form.setAttribute("th:action", "@{/chat/save/3}")
  // message.content = message.user_name + ' connected!'
     } else if (message.type == 'DISCONNECT') {
+
         messageElement.classList.add('event-message')
         message.content = message.user_name + ' left!'
-    } else {
+    } else if (message.type == 'RECONNECT')
+    {
+        // alert("RECONNECT")
+        flag = false;
+        username = message.user_name
+        messageElement.classList.add('event-message')
+        userId = message.user_id
+        const form = document.querySelector("#some-random-id")
+        form.setAttribute("action", "/chat/save/" + userId + "/" + filmId + "/")
+    }
+    else {
         messageElement.classList.add('chat-message')
 
-        const avatarContainer = document.createElement('div')
-        avatarContainer.className = 'img_cont_msg'
-        const avatarElement = document.createElement('div')
-        avatarElement.className = 'circle user_img_msg'
-        const avatarText = document.createTextNode(message.user_name[0])
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.user_name)
-        avatarContainer.appendChild(avatarElement)
+        let image = message.image;
+
+
+        ///катинка
+        // if (image)
+        // {
+            const avatarContainer = document.createElement('div')
+            avatarContainer.className = 'img_cont_msg'
+            var img = document.createElement("img");
+            img.src = "/UrlForImage/avatar/" + image;
+            img.height = 50;
+            img.width = 50;
+            avatarContainer.appendChild(img)
+        // }
+        //     else
+        // {
+        //     const avatarContainer = document.createElement('div')
+        //     avatarContainer.className = 'img_cont_msg'
+        //     const avatarElement = document.createElement('div')
+        //     avatarElement.className = 'circle user_img_msg'
+        //     const avatarText = document.createTextNode(message.user_name[0]);
+        //     avatarElement.appendChild(avatarText);
+        //     avatarElement.style['background-color'] = getAvatarColor(message.user_name);
+        //     avatarContainer.appendChild(avatarElement);
+        // }
+
+
+
 
         messageElement.style['background-color'] = getAvatarColor(message.user_name)
 
@@ -222,7 +288,7 @@ const onMessageReceived = (payload) => {
         messageElement.appendChild(time)
 
     }
-    // alert(flag)
+
     if ((!flag)) {
         printAllMessages(message, chatCard)
         flag = true
@@ -252,12 +318,12 @@ const getAvatarColor = (messageSender) => {
 }
 
 var x = getCookie('chat');
-const form = document.querySelector("#some-random-id")
-form.setAttribute("action", "/chat/save/3")
-// alert(x)
+
+// alert(x + " my Cook")
 if (x) {
-    username = x;
-    // alert(username)
+    flag = false;
+    userId = x;
+    filmId = document.querySelector('#film_id').value.trim()
     const login = document.querySelector('#login')
     login.classList.add('hide')
 

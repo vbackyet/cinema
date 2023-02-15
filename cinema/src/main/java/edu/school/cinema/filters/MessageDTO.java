@@ -28,6 +28,8 @@ public class MessageDTO {
     private String type;
     private Date date;
 
+    private String image;
+
     public MessageDTO(MessageType disconnect, String username) {
         user_name = username;
         type = String.valueOf(disconnect);
