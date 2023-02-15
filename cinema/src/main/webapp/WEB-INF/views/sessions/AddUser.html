@@ -51,8 +51,12 @@
         $.each(data, function(key, value){
           if (value.film.title.search(expression) != -1) {
 
-              $('#result').append('<li class="list-group-item link-class"><img src="'+  '/UrlForImage/' + value.film.poster_for_a_movie+'" height="40" width="40" class="img-thumbnail" /> '+value.film.title+' | <span class="text-muted">'+value.cost+'</span></li>');
-            }
+              $('#result').append('<li class="list-group-item link-class"><img src="'+  '/UrlForImage/' + value.film.poster_for_a_movie+'" height="40" width="40" class="img-thumbnail" /> '+
+                      value.film.title+' | <span class="text-muted">'+value.startAt.monthValue + '/' + value.startAt.dayOfMonth
+                      + ' ' +value.startAt.hour + ':' + value.startAt.minute +' | <span class="text-muted">'+value.cost + '</span></li>');
+            // "monthValue":1,"dayOfMonth":5,"hour":16,"minute":29
+
+          }
         });
       });
     });

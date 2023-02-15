@@ -66,7 +66,6 @@ public class MessagesRepositoryEntityManagerImpl {
         );
         query.setParameter("id", id);
         query.setMaxResults(20);
-        System.out.println(query.getResultList() + "   <---- MY RESULT");
         return query.getResultList();
     }
 

@@ -36,8 +36,8 @@ public class Session {
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    @JsonIgnore
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd' 'HH:mm" )
+//    @JsonIgnore
     @Column(name = "start_at")
     private LocalDateTime startAt;
 
