@@ -16,12 +16,12 @@
 
 
     <label for="film">Choose film:</label>
-            <select th:object="${film}" th:field="${film.id}" id="film" th:for = "bygaga">
+            <select th:name="film" th:field="${session.film.id}" id="film" th:for = "bygaga">
                 <option th:each="filmer : ${films}" th:value="${filmer.getId()}"
                         th:text="${filmer.getTitle()}" th:id="bygaga"></option>
             </select>
     <label for="hall">Choose hall:</label>
-            <select th:object="${hall}" th:field="${hall.id}" id="hall" th:for = "bygaga2" >
+            <select th:name = "hall" th:field="${session.hall.id}" id="hall" th:for = "bygaga2" >
                 <option th:each="haller : ${halls}" th:value="${haller.getId()}"
                         th:text="${haller.getSerial_number()}" th:id="bygaga2"></option>
             </select>

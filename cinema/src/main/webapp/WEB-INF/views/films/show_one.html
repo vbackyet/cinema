@@ -10,7 +10,7 @@
 <p th:text="${film.getAge_restrictions()}">VALUE</p>
 <p th:text="${film.getDescription()}">VALUE</p>
 
-<!--<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>-->
+<a th:href="@{/films/{id}/chat/(id=${film.getId()})}">Chat</a>
 
 <form th:method="DELETE" th:action="@{/admin/panel/films/{id}/delete(id=${film.getId()})}">
   <input type="submit" value="Delete"/>

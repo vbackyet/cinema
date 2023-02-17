@@ -41,16 +41,16 @@ public class SessionController {
         FilmDAO = filmDAO;
     }
 
-//    @GetMapping()
-//    public String show(Model model)
-//    {
-//        System.out.println("here we go");
-//        System.out.println(SessionDAO.findAll().get(0).getCost());
-//
-//        model.addAttribute("sessions" , SessionDAO.findAll());
-//        model.addAttribute("films" , FilmDAO.findAll());
-//        return "sessions/show_all";
-//    }
+    @GetMapping()
+    public String show(Model model)
+    {
+        System.out.println("here we go");
+        System.out.println(SessionDAO.findAll().get(0).getCost());
+
+        model.addAttribute("sessions" , SessionDAO.findAll());
+        model.addAttribute("films" , FilmDAO.findAll());
+        return "sessions/show_all";
+    }
 
 //    @GetMapping()
 //    public String show(Model model)
@@ -79,7 +79,7 @@ public class SessionController {
         return new ResponseEntity<>(sessions, HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping("/for_user")
     public String listWithView(Model model) {
         // Call RESTful method to avoid repeating account lookup logic
         model.addAttribute("films" , FilmDAO.findAll());
@@ -123,7 +123,8 @@ public class SessionController {
     ) throws ParseException {
         System.out.println(hall.getId() + " !!!!!!!!!!!!!!!!!!");
         System.out.println(film.getId() + " !!!!!!!!!!!!!!!!!!");
-        SessionDAO.save(session, film.getId(), hall.getId());
+        System.out.println(session);
+        SessionDAO.save(session, session.getFilm().getId(), session.getHall().getId());
         return "redirect:/admin/panel/sessions/";
     }
 //    https://www.youtube.com/watch?v=U4lqTmFmbAM

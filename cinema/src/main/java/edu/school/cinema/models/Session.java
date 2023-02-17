@@ -53,7 +53,7 @@ public class Session {
         return "Session{" +
                 "id=" + id +
                 ", film=" + film +
-                ", startAt=" + startAt.toString() +
+//                ", startAt=" + startAt.toString() +
                 ", hall=" + hall +
                 ", cost=" + cost +
                 '}';

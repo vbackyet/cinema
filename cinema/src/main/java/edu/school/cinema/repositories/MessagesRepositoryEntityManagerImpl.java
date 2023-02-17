@@ -4,10 +4,11 @@ import edu.school.cinema.models.Message;
 import edu.school.cinema.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import com.google.common.collect.Lists;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -49,7 +50,9 @@ public class MessagesRepositoryEntityManagerImpl {
         return newUser.getId();
     }
 
-
+    public static<T> List<T> reverseList(List<T> list) {
+        return new ArrayList<>(Lists.reverse(list));
+    }
 
     public User getUserById(int user_id) {
        return  entityManager.find(User.class, user_id);
@@ -62,11 +65,11 @@ public class MessagesRepositoryEntityManagerImpl {
     public List<Message> findAllByFilmId(int id)
     {
         TypedQuery<Message> query = entityManager.createQuery(
-                "SELECT m FROM Message m WHERE m.film.id = :id ORDER BY m.time", Message.class
+                "SELECT m FROM Message m WHERE m.film.id = :id ORDER BY m.time DESC", Message.class
         );
         query.setParameter("id", id);
         query.setMaxResults(20);
-        return query.getResultList();
+        return reverseList(query.getResultList());
     }
 
 }

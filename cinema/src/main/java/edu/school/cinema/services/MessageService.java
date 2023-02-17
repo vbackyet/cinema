@@ -35,6 +35,7 @@ public class MessageService {
         new_message.setTime(message.getDate());
         User my_user = MessageDAO.getUserById(message.getUser_id());
         new_message.setSender(my_user);
+        System.out.println(new_message + "   --- My new message");
 //        User new_user = new User(message.getUser_name());
 //        new_message.setSender(new_user);
 
